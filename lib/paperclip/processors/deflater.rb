@@ -1,39 +1,27 @@
-require 'active_model'
-require 'paperclip/processor'
-require 'zlib'
-require 'tempfile'
+require_relative 'deflater_base'
 
 module Paperclip
   module Processors
-    class Deflater < ::Paperclip::Processor
-      VERSION = ::File.read(::File.expand_path('../../../../VERSION', __FILE__)).to_s.strip
-
+    class Deflater < DeflaterBase
       def initialize(file, options = {}, attachment = nil)
         super
-        @format          = @options[:format]
-        @deflate_options    = @options[:deflate_options] || {}
-        @current_format  = File.extname(@file.path)
-        @basename        = File.basename(@file.path, @current_format)
+        @deflate_options = @options[:deflate_options] || {}
       end
 
-      def make
-        src = @file
+      private
 
-        should_deflate = @attachment.instance_read(:deflate)
-        return src if should_deflate == false
-
+      def make_impl
         level       = @deflate_options[:level]
         window_bits = @deflate_options[:window_bits]
         memlevel    = @deflate_options[:memlevel]
         strategy    = @deflate_options[:strategy]
 
-        dst = Tempfile.new([@basename, @format ? ".#{@format}" : ''])
-        dst.binmode
+        dst = create_tempfile
         zd = Zlib::Deflate.new(level, window_bits, memlevel, strategy)
-        dst.write zd.deflate(src.read)
+        dst.write zd.deflate(@file.read)
+        zd.close
         dst.flush
         dst.rewind
-        zd.close
 
         dst
       end

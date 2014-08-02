@@ -1,8 +1,8 @@
-require File.expand_path('../lib/paperclip/processors/deflater', __FILE__)
+require File.expand_path('../lib/paperclip/deflater/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.name        = "paperclip-deflater"
-  gem.version     = Paperclip::Processors::Deflater::VERSION
+  gem.version     = Paperclip::Deflater::VERSION
   gem.platform    = Gem::Platform::RUBY
   gem.authors     = ["Daisuke Taniwaki"]
   gem.email       = ["daisuketaniwaki@gmail.com"]
