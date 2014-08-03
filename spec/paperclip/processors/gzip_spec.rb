@@ -10,7 +10,7 @@ describe Paperclip::Processors::Gzip do
     allow(attachment).to receive(:instance_read).with(:no_deflate)
   end
   describe "private methods" do
-    describe "#make_impl" do
+    describe "#make" do
       shared_examples "deflate" do
         it "deflates the file" do
           dst = subject.make

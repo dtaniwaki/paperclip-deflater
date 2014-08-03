@@ -8,9 +8,7 @@ module Paperclip
         @deflate_options = @options[:deflate_options] || {}
       end
 
-      private
-
-      def make_impl
+      def make
         level       = @deflate_options[:level]
         window_bits = @deflate_options[:window_bits]
         memlevel    = @deflate_options[:memlevel]

@@ -8,9 +8,7 @@ module Paperclip
         @gzip_options = @options[:gzip_options] || {}
       end
 
-      private
-
-      def make_impl
+      def make
         level       = @gzip_options[:level]
         strategy    = @gzip_options[:strategy]
 

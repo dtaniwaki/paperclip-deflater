@@ -10,19 +10,11 @@ describe Paperclip::Processors::DeflaterBase do
     allow(attachment).to receive(:instance_read).with(:no_deflate).and_return(no_deflate)
   end
   describe "#make" do
-    context "no_deflate setting is true" do
-      let(:no_deflate) { true }
-      it "returns original" do
-        expect(subject.make).to eq(file)
-      end
+    it "raises an exception" do
+      expect{ subject.make }.to raise_error(NotImplementedError)
     end
   end
   describe "private methods" do
-    describe "#make_impl" do
-      it "raises an exception" do
-        expect{ subject.send(:make_impl) }.to raise_error(NotImplementedError)
-      end
-    end
     describe "create_tempfile" do
       it "returns a tempfile" do
         f = subject.send(:create_tempfile)

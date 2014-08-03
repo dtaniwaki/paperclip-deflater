@@ -24,14 +24,10 @@ And run `bundle install`.
 class Something
   has_attached_file :js,
     s3_metadata: { content_encoding: 'gzip' },
-    styles: { gzip: {processors: [:deflater], format: '.gz'} },
+    styles: { gzip: {processors: [:gzip], format: '.gz'} },
     path: "test/:id.:extension:format"
 end
 ```
-
-## Per instance turn-off flag
-
-If the instance (`xx`) has `xx_no_deflate` method and it returns `true`, you can disable the deflating for the attachment.
 
 ## Contributing
 

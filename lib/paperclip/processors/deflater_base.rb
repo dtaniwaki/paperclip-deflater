@@ -13,15 +13,10 @@ module Paperclip
       end
 
       def make
-        return @file if @attachment.instance_read(:no_deflate) == true
-        make_impl
+        raise NotImplementedError
       end
 
       private
-
-      def make_impl
-        raise NotImplementedError
-      end
 
       def create_tempfile
         f = Tempfile.new([@basename, @format ? ".#{@format}" : ''])
