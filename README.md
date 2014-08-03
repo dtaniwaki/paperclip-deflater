@@ -21,11 +21,16 @@ And run `bundle install`.
 ## Setup
 
 ```ruby
-class Something
+class Something < ActiveRecord::Base
   has_attached_file :js,
-    s3_metadata: { content_encoding: 'gzip' },
-    styles: { gzip: {processors: [:gzip], format: '.gz'} },
-    path: "test/:id.:extension:format"
+    styles: {
+      gzip: {
+        processors: [:gzip],
+        format: 'js.gz',
+        s3_headers: { content_type: 'application/javascript', content_encoding: 'gzip' },
+      }
+    },
+    path: "test/:id.:extension"
 end
 ```
 
