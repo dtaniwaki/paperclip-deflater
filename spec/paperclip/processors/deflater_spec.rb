@@ -11,10 +11,19 @@ describe Paperclip::Processors::Deflater do
   end
   describe "private methods" do
     describe "#make_impl" do
-      it "deflates the file" do
-        dst = subject.make
-        data = dst.read
-        expect(data.unpack('H*').first).to eq("x\x9C".unpack('H*').first)
+      shared_examples "deflate" do
+        it "deflates the file" do
+          dst = subject.make
+          data = dst.read
+          expect(data.unpack('H*').first).to eq(result.unpack('H*').first)
+        end
+      end
+      let(:result) { "x\x9C" }
+      include_examples "deflate"
+      context "level gzip_options" do
+        let(:result) { "x\xDA" }
+        let(:options) { {deflate_options: {level: Zlib::BEST_COMPRESSION}} }
+        include_examples "deflate"
       end
     end
   end
