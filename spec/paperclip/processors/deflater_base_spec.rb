@@ -2,16 +2,16 @@ require 'spec_helper'
 
 describe Paperclip::Processors::DeflaterBase do
   let(:attachment) { double }
-  let(:should_deflate) { true }
+  let(:no_deflate) { nil }
   let(:options) { {} }
   let(:file) { test_file }
   subject { Paperclip::Processors::DeflaterBase.new(file, options, attachment) }
   before do
-    allow(attachment).to receive(:instance_read).with(:deflate).and_return(should_deflate)
+    allow(attachment).to receive(:instance_read).with(:no_deflate).and_return(no_deflate)
   end
   describe "#make" do
-    context "deflate setting is false" do
-      let(:should_deflate) { false }
+    context "no_deflate setting is true" do
+      let(:no_deflate) { true }
       it "returns original" do
         expect(subject.make).to eq(file)
       end

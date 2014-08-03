@@ -29,6 +29,10 @@ class Something
 end
 ```
 
+## Per instance turn-off flag
+
+If the instance (`xx`) has `xx_no_deflate` method and it returns `true`, you can disable the deflating for the attachment.
+
 ## Contributing
 
 1. Fork it

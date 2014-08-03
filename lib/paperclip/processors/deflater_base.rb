@@ -13,7 +13,7 @@ module Paperclip
       end
 
       def make
-        return @file if @attachment.instance_read(:deflate) == false
+        return @file if @attachment.instance_read(:no_deflate) == true
         make_impl
       end
 
