@@ -13,9 +13,12 @@ module Paperclip
         strategy    = @gzip_options[:strategy]
 
         dst = create_tempfile
-        gz = Zlib::GzipWriter.new(dst, level, strategy)
-        gz.write(@file.read)
-        gz.close
+        begin
+          gz = Zlib::GzipWriter.new(dst, level, strategy)
+          gz.write(@file.read)
+        ensure
+          gz.close
+        end
         dst.open
 
         dst

@@ -15,9 +15,12 @@ module Paperclip
         strategy    = @deflate_options[:strategy]
 
         dst = create_tempfile
-        zd = Zlib::Deflate.new(level, window_bits, memlevel, strategy)
-        dst.write zd.deflate(@file.read)
-        zd.close
+        begin
+          zd = Zlib::Deflate.new(level, window_bits, memlevel, strategy)
+          dst.write zd.deflate(@file.read)
+        ensure
+          zd.close
+        end
         dst.flush
         dst.rewind
 
