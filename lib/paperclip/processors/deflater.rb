@@ -21,6 +21,7 @@ module Paperclip
         ensure
           zd.close
         end
+        @file.rewind
         dst.flush
         dst.rewind
 

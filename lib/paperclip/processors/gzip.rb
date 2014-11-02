@@ -19,6 +19,7 @@ module Paperclip
         ensure
           gz.close
         end
+        @file.rewind
         dst.open
 
         dst
