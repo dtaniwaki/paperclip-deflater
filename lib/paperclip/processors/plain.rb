@@ -1,14 +1,15 @@
-require 'paperclip/processor'
+require_relative 'deflater_base'
 
 module Paperclip
   module Processors
-    class Plain < ::Paperclip::Processor
-      def initialize(file, options = {}, attachment = nil)
-        super
-      end
-
+    class Plain < DeflaterBase
       def make
-        @file
+        dst = create_tempfile
+        dst.write @file.read
+        @file.rewind
+        dst.flush
+        dst.rewind
+        dst
       end
     end
   end

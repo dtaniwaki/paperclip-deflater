@@ -11,7 +11,8 @@ describe Paperclip::Processors::Plain do
   end
   describe "#make" do
     it "returns the file" do
-      expect(subject.make).to eq(file)
+      expect(subject.make).not_to be file
+      expect(subject.make.read).to eq test_file.read
     end
   end
 end
