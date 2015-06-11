@@ -15,10 +15,12 @@ module Paperclip
         dst = create_tempfile
         begin
           gz = Zlib::GzipWriter.new(dst, level, strategy)
-          gz.write(@file.read)
-        ensure
-          gz.close
+          gz.write @file.read
+        rescue ::Exception => e
+          gz.close rescue nil
+          raise e
         end
+        gz.close
         @file.rewind
         dst.open
 
