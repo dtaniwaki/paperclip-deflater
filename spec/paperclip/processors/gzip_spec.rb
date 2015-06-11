@@ -28,6 +28,37 @@ describe Paperclip::Processors::Gzip do
         let(:options) { {gzip_options: {level: Zlib::BEST_COMPRESSION}} }
         include_examples "deflate"
       end
+      context "gzip failed to close" do
+        before do
+          @error = RuntimeError.new "error"
+          @writer = {}
+          allow(Zlib::GzipWriter).to receive(:new).and_return @writer
+          allow(@writer).to receive(:write).and_return nil
+        end
+
+        it "raises an error to close" do
+          expect(@writer).to receive(:close).and_raise @error
+          expect {
+            subject.make
+          }.to raise_error @error
+        end
+      end
+      context "gzip failed to write" do
+        before do
+          @error1 = RuntimeError.new "error1"
+          @error2 = RuntimeError.new "error2"
+          @writer = {}
+          allow(Zlib::GzipWriter).to receive(:new).and_return @writer
+          allow(@writer).to receive(:write).and_raise @error1
+        end
+
+        it "does not raise an error to close" do
+          expect(@writer).to receive(:close).and_raise @error2
+          expect {
+            subject.make
+          }.to raise_error @error1
+        end
+      end
     end
   end
 end
