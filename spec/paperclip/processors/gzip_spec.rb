@@ -15,16 +15,14 @@ describe Paperclip::Processors::Gzip do
         it "deflates the file" do
           dst = subject.make
           data = dst.read
-          expect(data[0..3]).to eq(result1)
           # data[4..7] is modified time and it changes
-          expect(data[8..-1]).to eq(result2)
+          expect(data.bytes).to match(result)
         end
       end
-      let(:result1) { "\u001F\x8B\b\u0000" }
-      let(:result2) { "\u0000\u0003+I-.\xE1\u0002\u0000\xC65\xB9;\u0005\u0000\u0000\u0000" }
+      let(:result) { [31, 139, 8, 0, anything, anything, anything, anything, 0, 3, 43, 73, 45, 46, 225, 2, 0, 198, 53, 185, 59, 5, 0, 0, 0] }
       include_examples "deflate"
       context "level gzip_options" do
-        let(:result2) { "\u0002\u0003+I-.\xE1\u0002\u0000\xC65\xB9;\u0005\u0000\u0000\u0000" }
+        let(:result) { [31, 139, 8, 0, anything, anything, anything, anything, 2, 3, 43, 73, 45, 46, 225, 2, 0, 198, 53, 185, 59, 5, 0, 0, 0] }
         let(:options) { {gzip_options: {level: Zlib::BEST_COMPRESSION}} }
         include_examples "deflate"
       end
