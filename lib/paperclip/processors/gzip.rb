@@ -15,7 +15,9 @@ module Paperclip
         dst = create_tempfile
         begin
           gz = Zlib::GzipWriter.new(dst, level, strategy)
-          gz.write @file.read
+          while chunk = @file.read(16 * 1024) do
+            gz.write chunk
+          end
         rescue ::Exception => e
           gz.close rescue nil
           raise e
