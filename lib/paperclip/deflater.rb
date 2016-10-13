@@ -1,3 +1,4 @@
+require 'active_support/core_ext/module/delegation'
 require 'paperclip'
 require 'paperclip/processors/plain'
 require 'paperclip/processors/deflater'
