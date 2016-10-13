@@ -17,6 +17,7 @@ env:
   - PAPERCLIP_VERSION=4.1.0
   - PAPERCLIP_VERSION=4.2.0
   - PAPERCLIP_VERSION=4.3.0
+  - PAPERCLIP_VERSION=5.0.0
 
 script: "bundle exec rake spec"
 
