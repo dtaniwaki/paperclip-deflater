@@ -1,5 +1,5 @@
 module Paperclip
   module Deflater
-    VERSION = ::File.read(::File.expand_path('../../../../VERSION', __FILE__)).to_s.strip
+    VERSION = '0.1.4'
   end
 end
