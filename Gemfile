@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
 
+gem "gem-release"
+gem "pry"
+
 ruby_version = RUBY_VERSION
 paperclip_version = ENV['PAPERCLIP_VERSION']
 
